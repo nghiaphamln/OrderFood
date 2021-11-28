@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Món ngon mỗi ngày</string>
+    <string name="hint_username">Tài khoản</string>
+    <string name="hint_password">Mật khẩu</string>
+    <string name="button_sign_in">Đăng nhập</string>
+    <string name="button_sign_up">Đăng ký</string>
+    <string name="button_send">Gửi</string>
+    <string name="text_forgot_password">Quên mật khẩu?</string>
+    <string name="text_signin_message">Xin chào, đăng nhập tài khoản của bạn</string>
+    <string name="text_signin_social_media">Hoặc đăng nhập bằng tài khoản mạng xã hội</string>
+    <string name="text_signup_social_media">Hoặc đăng ký bằng tài khoản mạng xã hội</string>
+    <string name="text_signin_signup">Không có tài khoản? <b>Đăng ký</b></string>
+    <string name="text_signup_terms">Để đăng ký, bạn phải chấp nhận <b>điều khoản</b></string>
+    <string name="text_signup_message">Chào bạn, hãy đăng ký tài khoản của bạn ngay!</string>
+
+    <string name="text_forgot_password_title">Bạn quên mật khẩu? Đừng lo</string>
+    <string name="text_forgot_password_message">Chúng tôi sẽ gửi cho bạn liên kết để khôi phục tài khoản</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_phone">Số điện thoại</string>
+    <string name="hint_confirm_password">Nhập lại mật khẩu</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Đã đăng nhập nên chỉ thấy quản lí tài khoản thôi!</string>
+    <string name="find_food_hint">Tìm món ăn</string>
+    <string name="cart_title">Giỏ hàng của tôi</string>
+</resources>

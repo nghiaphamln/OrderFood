@@ -1,0 +1,6 @@
+/API/.idea
+*.pyc
+*.pyo
+/Food/.idea
+/Food/.gradle/
+
