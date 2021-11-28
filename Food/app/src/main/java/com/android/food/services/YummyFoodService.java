@@ -1,5 +1,7 @@
 package com.android.food.services;
 
+import com.android.food.models.ForgotPasswordRequest;
+import com.android.food.models.ForgotPasswordResponse;
 import com.android.food.models.LoginRequest;
 import com.android.food.models.LoginResponse;
 import com.android.food.models.RegisterRequest;
@@ -15,4 +17,7 @@ public interface YummyFoodService {
 
     @POST("/register")
     Call<RegisterResponse> register(@Body RegisterRequest data);
+
+    @POST("/send-otp")
+    Call<ForgotPasswordResponse> sendOtp(@Body ForgotPasswordRequest data);
 }
