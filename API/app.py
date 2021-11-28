@@ -65,6 +65,38 @@ def send_email():
         return resp
 
 
+# check otp
+@app.route('/check-otp', methods=['POST'])
+def check_otp():
+    data = request.get_json()
+    try:
+        email = data['email']
+        otp = data['otp']
+        if email and otp:
+            conn = database.connect_to_db()
+            cur = conn.cursor()
+            row = cur.execute("SELECT * FROM users WHERE email=(?)", (email, )).fetchone()
+            conn.commit()
+            if row:
+                if row[5] == otp:
+                    return jsonify({
+                        'message': 'Valid otp'
+                    })
+                else:
+                    resp = jsonify({'message': 'Bad Request - invalid otp'})
+                    resp.status_code = 400
+                    return resp
+            else:
+                resp = jsonify({'message': 'Bad Request - invalid email'})
+                resp.status_code = 400
+                return resp
+    except Exception as e:
+        print(e)
+        resp = jsonify({'message': 'Bad Request - invalid credendtials'})
+        resp.status_code = 400
+        return resp
+
+
 @app.route('/reset-password', methods=['POST'])
 def reset_password():
     data = request.get_json()

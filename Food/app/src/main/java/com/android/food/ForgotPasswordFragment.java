@@ -13,6 +13,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.android.food.client.ApiUtils;
+import com.android.food.manager.AccountManager;
 import com.android.food.models.ForgotPasswordRequest;
 import com.android.food.models.ForgotPasswordResponse;
 import com.android.food.services.YummyFoodService;
@@ -55,6 +56,7 @@ public class ForgotPasswordFragment extends Fragment {
                         }
                         else {
                             Toast.makeText(getActivity(), "Đã gửi OTP đến email của bạn!", Toast.LENGTH_SHORT).show();
+                            AccountManager.getInstance().setEmail(email);
                             OtpFragment otpFragment = new OtpFragment();
                             FragmentManager manager = getFragmentManager();
                             assert manager != null;
