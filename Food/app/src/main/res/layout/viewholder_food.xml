@@ -18,7 +18,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        app:srcCompat="@drawable/pizza2" />
+        app:srcCompat="@drawable/pizza2"
+        android:scaleType="fitXY"/>
 
     <TextView
         android:id="@+id/title"

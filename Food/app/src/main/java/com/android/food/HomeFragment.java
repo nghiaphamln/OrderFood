@@ -19,9 +19,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.food.adapter.CategoryAdapter;
+import com.android.food.adapter.PopularAdapter;
 import com.android.food.client.ApiUtils;
 import com.android.food.domain.CategoryDomain;
 import com.android.food.models.CategoriesResponse;
+import com.android.food.models.ProductsRespone;
 import com.android.food.services.YummyFoodService;
 
 import java.util.ArrayList;
@@ -33,8 +35,9 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerViewCategoryList;
+    private RecyclerView recyclerViewCategoryList, recyclerViewPopularList;
     private CategoryAdapter categoryAdapter;
+    private PopularAdapter popularAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -45,6 +48,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerViewCategoryList = v.findViewById(R.id.recyclerView);
+        recyclerViewPopularList = v.findViewById(R.id.recyclerView2);
         recyclerViewCategory(v);
 
         return v;
@@ -69,6 +73,31 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<CategoriesResponse>> call, Throwable t) {
+
+            }
+        });
+
+        Call<List<ProductsRespone>> callbackPopular = mService.getProducts();
+        callbackPopular.enqueue(new Callback<List<ProductsRespone>>() {
+            @Override
+            public void onResponse(Call<List<ProductsRespone>> call,
+                                   Response<List<ProductsRespone>> response) {
+
+                ArrayList<ProductsRespone> productsResponeArrayList =
+                        (ArrayList<ProductsRespone>) response.body();
+
+                popularAdapter = new PopularAdapter(getActivity(), productsResponeArrayList);
+
+                LinearLayoutManager linearLayoutManagerPopular = new
+                        LinearLayoutManager(getActivity());
+
+                linearLayoutManagerPopular.setOrientation(linearLayoutManagerPopular.HORIZONTAL);
+                recyclerViewPopularList.setLayoutManager(linearLayoutManagerPopular);
+                recyclerViewPopularList.setAdapter(popularAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductsRespone>> call, Throwable t) {
 
             }
         });
