@@ -1,5 +1,6 @@
 package com.android.food.services;
 
+import com.android.food.models.CategoriesResponse;
 import com.android.food.models.ChangePasswordRequest;
 import com.android.food.models.ChangePasswordResponse;
 import com.android.food.models.ForgotPasswordRequest;
@@ -18,6 +19,7 @@ import com.android.food.models.ResetPasswordResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.GET;
 
 public interface YummyFoodService {
     @POST("/login")
@@ -40,4 +42,7 @@ public interface YummyFoodService {
 
     @POST("/change-password")
     Call<ChangePasswordResponse> changePassword(@Body ChangePasswordRequest data);
+
+    @GET("/categories")
+    Call<CategoriesResponse> getCategories();
 }

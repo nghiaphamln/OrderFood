@@ -288,5 +288,28 @@ def change_password():
         return resp
 
 
+# get all categories
+@app.route('/categories', methods=['GET'])
+def get_categories():
+    try:
+        conn = database.connect_to_db()
+        cur = conn.cursor()
+        row = cur.execute("SELECT * FROM categories").fetchall()
+        conn.commit()
+        data = []
+        for i in row:
+            data.append({
+                'id': i[0],
+                'name': i[1],
+                'image': i[2]
+            })
+        return jsonify(data)
+    except Exception as ex:
+        print(ex)
+        resp = jsonify({'message': 'Bad Request'})
+        resp.status_code = 400
+        return resp
+
+
 if __name__ == '__main__':
     app.run()
