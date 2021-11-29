@@ -2,6 +2,8 @@ package com.android.food.services;
 
 import com.android.food.models.ForgotPasswordRequest;
 import com.android.food.models.ForgotPasswordResponse;
+import com.android.food.models.GetInformationRequest;
+import com.android.food.models.GetInformationResponse;
 import com.android.food.models.LoginRequest;
 import com.android.food.models.LoginResponse;
 import com.android.food.models.OtpRequest;
@@ -30,4 +32,7 @@ public interface YummyFoodService {
 
     @POST("/reset-password")
     Call<ResetPasswordResponse> resetPassword(@Body ResetPasswordRequest data);
+
+    @POST("/get-info")
+    Call<GetInformationResponse> getInformation(@Body GetInformationRequest data);
 }

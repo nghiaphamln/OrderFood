@@ -3,62 +3,82 @@ package com.android.food;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link InformationFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.android.food.client.ApiUtils;
+import com.android.food.manager.AccountManager;
+import com.android.food.models.GetInformationRequest;
+import com.android.food.models.GetInformationResponse;
+import com.android.food.services.YummyFoodService;
+import com.google.android.material.textfield.TextInputEditText;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class InformationFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public InformationFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment InformationFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static InformationFragment newInstance(String param1, String param2) {
-        InformationFragment fragment = new InformationFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_information, container, false);
+        YummyFoodService mService = ApiUtils.getFoodService();
+        View v = inflater.inflate(R.layout.fragment_information, container, false);
+
+        // Xử lí nút trở về nè
+        Button toolBarBackButton = (Button) v.findViewById(R.id.toolbarbtn);
+        toolBarBackButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                AccountManagerFragment accountManagerFragment = new AccountManagerFragment();
+                FragmentManager manager = getFragmentManager();
+                assert manager != null;
+                manager.beginTransaction()
+                        .replace(R.id.container, accountManagerFragment)
+                        .commit();
+            }
+        });
+
+        // lấy dữ liệu từ api
+        GetInformationRequest data = new GetInformationRequest();
+        data.setUsername(AccountManager.getInstance().getUsername());
+        mService.getInformation(data).enqueue(new Callback<GetInformationResponse>() {
+            @Override
+            public void onResponse(Call<GetInformationResponse> call, Response<GetInformationResponse> response) {
+                if (response.isSuccessful()) {
+                    String username = response.body().getUsername();
+                    String email = response.body().getEmail();
+                    String phone = response.body().getPhone();
+                    System.out.println(username + "\n" + email + "\n" + phone);
+                    // đưa thông tin người dùng vào form
+                    TextInputEditText emailEditText = (TextInputEditText) v.findViewById(R.id.et_email);
+                    emailEditText.setText(email);
+
+                    TextInputEditText usernameEditText = (TextInputEditText) v.findViewById(R.id.et_username);
+                    usernameEditText.setText(username);
+
+                    TextInputEditText phoneEditText = (TextInputEditText) v.findViewById(R.id.et_phone);
+                    phoneEditText.setText(phone);
+                }
+                else {
+                    Toast.makeText(getActivity(), "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetInformationResponse> call, Throwable t) {
+
+            }
+        });
+
+        return v;
     }
 }

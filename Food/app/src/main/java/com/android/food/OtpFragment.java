@@ -37,6 +37,20 @@ public class OtpFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_otp, container, false);
 
+        // Xử lí nút trở về nè
+        Button toolBarBackButton = (Button) v.findViewById(R.id.toolbarbtn);
+        toolBarBackButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
+                FragmentManager manager = getFragmentManager();
+                assert manager != null;
+                manager.beginTransaction()
+                        .replace(R.id.container, forgotPasswordFragment)
+                        .commit();
+            }
+        });
+
         Button btnSend = (Button) v.findViewById(R.id.button_send);
         TextInputEditText otpEditText = v.findViewById(R.id.et_otp);
 

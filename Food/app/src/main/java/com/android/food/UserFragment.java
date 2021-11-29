@@ -61,6 +61,7 @@ public class UserFragment extends Fragment {
                             Toast.makeText(getActivity(), "Bạn đã đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                             // chuyển trạng trái đăng nhập thành True
                             AccountManager.getInstance().setLogin(true);
+                            AccountManager.getInstance().setUsername(userName);
                             // chuyển sang trang quản lí tài khoản
                             AccountManagerFragment accountManagerFragment = new AccountManagerFragment();
                             FragmentManager manager = getFragmentManager();

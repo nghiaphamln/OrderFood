@@ -35,6 +35,20 @@ public class ResetPasswordFragment extends Fragment {
         YummyFoodService mService = ApiUtils.getFoodService();
         View v = inflater.inflate(R.layout.fragment_reset_password, container, false);
 
+        // Xử lí nút trở về nè
+        Button toolBarBackButton = (Button) v.findViewById(R.id.toolbarbtn);
+        toolBarBackButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                OtpFragment otpFragment = new OtpFragment();
+                FragmentManager manager = getFragmentManager();
+                assert manager != null;
+                manager.beginTransaction()
+                        .replace(R.id.container, otpFragment)
+                        .commit();
+            }
+        });
+
         TextInputEditText passwordEditText = v.findViewById(R.id.et_password);
         TextInputEditText confirmPasswordEditText = v.findViewById(R.id.et_confirm_password);
         Button btnSend = (Button) v.findViewById(R.id.button_send);

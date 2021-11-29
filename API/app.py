@@ -134,6 +134,34 @@ def reset_password():
         return resp
 
 
+# get information
+@app.route('/get-info', methods=['POST'])
+def get_info():
+    data = request.get_json()
+    try:
+        username = data['username']
+        if username:
+            conn = database.connect_to_db()
+            cur = conn.cursor()
+            row = cur.execute("SELECT * FROM users WHERE username=(?)", (username, )).fetchone()
+            conn.commit()
+            if row:
+                return jsonify({
+                    'username': row[2],
+                    'email': row[1],
+                    'phone': row[3]
+                })
+            else:
+                resp = jsonify({'message': 'Bad Request - invalid username'})
+                resp.status_code = 400
+                return resp
+    except Exception as e:
+        print(e)
+        resp = jsonify({'message': 'Bad Request - invalid credendtials'})
+        resp.status_code = 400
+        return resp
+
+
 @app.route('/login', methods=['POST'])
 def login():
     try:
@@ -217,6 +245,47 @@ def logout():
     if 'username' in session:
         session.pop('username', None)
     return jsonify({'message': 'You successfully logged out'})
+
+
+# change password
+@app.route('/change-password', methods=['POST'])
+def change_password():
+    try:
+        data = request.get_json()
+        username = data['username']
+        old_password = data['old_password']
+        new_password = data['new_password']
+
+        if username and old_password and new_password:
+            conn = database.connect_to_db()
+            cur = conn.cursor()
+            row = cur.execute("SELECT * FROM users WHERE username=(?)", (username, )).fetchone()
+            conn.commit()
+            if row:
+                if bcrypt.checkpw(str.encode(old_password), row[4]):
+                    new_password = bcrypt.hashpw(str.encode(new_password), bcrypt.gensalt())
+                    cur.execute("UPDATE users SET password=(?) WHERE username=(?)", (new_password, username))
+                    conn.commit()
+                    return jsonify({
+                        'message': 'Password successfully changed'
+                    })
+                else:
+                    resp = jsonify({'message': 'Bad Request - invalid password'})
+                    resp.status_code = 400
+                    return resp
+            else:
+                resp = jsonify({'message': 'Bad Request - invalid username'})
+                resp.status_code = 400
+                return resp
+        else:
+            resp = jsonify({'message': 'Bad Request - invalid credendtials'})
+            resp.status_code = 400
+            return resp
+    except Exception as ex:
+        print(ex)
+        resp = jsonify({'message': 'Bad Request - invalid credendtials'})
+        resp.status_code = 400
+        return resp
 
 
 if __name__ == '__main__':
