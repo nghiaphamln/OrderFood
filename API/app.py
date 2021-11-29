@@ -311,5 +311,31 @@ def get_categories():
         return resp
 
 
+# get all products
+@app.route('/products', methods=['GET'])
+def get_products():
+    try:
+        conn = database.connect_to_db()
+        cur = conn.cursor()
+        row = cur.execute("SELECT * FROM products").fetchall()
+        conn.commit()
+        data = []
+        for i in row:
+            data.append({
+                'id': str(i[0]),
+                'name': i[1],
+                'price': i[2],
+                'image': i[3],
+                'description': i[4],
+                'category_id': str(i[5])
+            })
+        return jsonify(data)
+    except Exception as ex:
+        print(ex)
+        resp = jsonify({'message': 'Bad Request'})
+        resp.status_code = 400
+        return resp
+
+
 if __name__ == '__main__':
     app.run()
