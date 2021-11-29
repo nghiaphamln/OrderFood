@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.food.client.ApiUtils;
 import com.android.food.manager.AccountManager;
@@ -54,6 +55,22 @@ public class AccountManagerFragment extends Fragment {
                 assert manager != null;
                 manager.beginTransaction()
                         .replace(R.id.container, changePasswordFragment)
+                        .commit();
+            }
+        });
+
+        // chỗ này xử lí nút đăng xuất nè
+        Button btnLogout = (Button) v.findViewById(R.id.btn_logout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Đã đăng xuất!", Toast.LENGTH_SHORT).show();
+                AccountManager.getInstance().setLogin(false);
+                UserFragment userFragment = new UserFragment();
+                FragmentManager manager = getFragmentManager();
+                assert manager != null;
+                manager.beginTransaction()
+                        .replace(R.id.container, userFragment)
                         .commit();
             }
         });
