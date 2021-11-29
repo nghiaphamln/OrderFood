@@ -1,5 +1,8 @@
 package com.android.food.models;
 
+import static com.android.food.client.ApiUtils.BASE_URL;
+
+import com.android.food.client.ApiUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -24,7 +27,7 @@ public class CategoriesResponse {
     }
 
     public String getImage() {
-        return image;
+        return BASE_URL + image;
     }
 
     public void setImage(String image) {

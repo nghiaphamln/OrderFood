@@ -34,7 +34,7 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerViewCategoryList;
-    private RecyclerView.Adapter adapter;
+    private CategoryAdapter categoryAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -44,26 +44,33 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        YummyFoodService mService = ApiUtils.getFoodService();
-
+        recyclerViewCategoryList = v.findViewById(R.id.recyclerView);
         recyclerViewCategory(v);
 
         return v;
     }
 
     private void recyclerViewCategory(View v) {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewCategoryList = v.findViewById(R.id.recyclerView);
-        recyclerViewCategoryList.setLayoutManager(linearLayoutManager);
+        YummyFoodService mService = ApiUtils.getFoodService();
+        Call<List<CategoriesResponse>> callback = mService.getCategories();
+        callback.enqueue(new Callback<List<CategoriesResponse>>() {
+            @Override
+            public void onResponse(Call<List<CategoriesResponse>> call,
+                                   Response<List<CategoriesResponse>> response) {
+                ArrayList<CategoriesResponse> categoryDomainArrayList =
+                        (ArrayList<CategoriesResponse>) response.body();
 
-        ArrayList<CategoryDomain> categoryList = new ArrayList<>();
-        categoryList.add(new CategoryDomain("Pizza", "cat_1"));
-        categoryList.add(new CategoryDomain("Burger", "cat_2"));
-        categoryList.add(new CategoryDomain("Hotdog", "cat_3"));
-        categoryList.add(new CategoryDomain("Drink", "cat_4"));
-        categoryList.add(new CategoryDomain("Dount", "cat_5"));
+                categoryAdapter = new CategoryAdapter(getActivity(), categoryDomainArrayList);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+                linearLayoutManager.setOrientation(linearLayoutManager.HORIZONTAL);
+                recyclerViewCategoryList.setLayoutManager(linearLayoutManager);
+                recyclerViewCategoryList.setAdapter(categoryAdapter);
+            }
 
-        adapter = new CategoryAdapter(categoryList);
-        recyclerViewCategoryList.setAdapter(adapter);
+            @Override
+            public void onFailure(Call<List<CategoriesResponse>> call, Throwable t) {
+
+            }
+        });
     }
 }

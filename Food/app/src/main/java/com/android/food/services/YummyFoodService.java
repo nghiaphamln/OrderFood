@@ -16,6 +16,8 @@ import com.android.food.models.RegisterResponse;
 import com.android.food.models.ResetPasswordRequest;
 import com.android.food.models.ResetPasswordResponse;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -44,5 +46,5 @@ public interface YummyFoodService {
     Call<ChangePasswordResponse> changePassword(@Body ChangePasswordRequest data);
 
     @GET("/categories")
-    Call<CategoriesResponse> getCategories();
+    Call<List<CategoriesResponse>> getCategories();
 }
