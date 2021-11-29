@@ -44,6 +44,20 @@ public class AccountManagerFragment extends Fragment {
             }
         });
 
+        // chỗ này load cái giao diện đổi mật khẩu nè
+        Button btnChangePassword = (Button) v.findViewById(R.id.btn_change_password);
+        btnChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChangePasswordFragment changePasswordFragment = new ChangePasswordFragment();
+                FragmentManager manager = getFragmentManager();
+                assert manager != null;
+                manager.beginTransaction()
+                        .replace(R.id.container, changePasswordFragment)
+                        .commit();
+            }
+        });
+
         return v;
     }
 }

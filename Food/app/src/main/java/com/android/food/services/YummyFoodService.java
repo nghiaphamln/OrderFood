@@ -1,5 +1,7 @@
 package com.android.food.services;
 
+import com.android.food.models.ChangePasswordRequest;
+import com.android.food.models.ChangePasswordResponse;
 import com.android.food.models.ForgotPasswordRequest;
 import com.android.food.models.ForgotPasswordResponse;
 import com.android.food.models.GetInformationRequest;
@@ -35,4 +37,7 @@ public interface YummyFoodService {
 
     @POST("/get-info")
     Call<GetInformationResponse> getInformation(@Body GetInformationRequest data);
+
+    @POST("/change-password")
+    Call<ChangePasswordResponse> changePassword(@Body ChangePasswordRequest data);
 }
