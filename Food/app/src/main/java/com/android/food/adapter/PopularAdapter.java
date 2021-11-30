@@ -6,11 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.food.R;
+import com.android.food.manager.CartManager;
 import com.android.food.models.ProductsRespone;
 import com.squareup.picasso.Picasso;
 
@@ -41,6 +43,15 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHold
         holder.txtTitle.setText(productsRespone.getName());
         holder.txtFee.setText(productsRespone.getPrice().toString());
         Picasso.get().load(productsRespone.getImage()).into(holder.imgPic);
+
+        holder.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<ProductsRespone> a = new ArrayList<>();
+                a.add(productsResponeArrayList.get(position));
+                CartManager.getInstance().setCartList(a);
+            }
+        });
     }
 
     @Override
