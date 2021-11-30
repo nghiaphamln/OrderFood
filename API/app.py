@@ -337,5 +337,41 @@ def get_products():
         return resp
 
 
+# add order
+@app.route('/orders', methods=['POST'])
+def add_order():
+    try:
+        data = request.get_json()
+        username = data['username']
+        products = data['products']
+        total = data['total']
+
+        if username and products and total:
+            conn = database.connect_to_db()
+            cur = conn.cursor()
+            row = cur.execute("SELECT * FROM users WHERE username=(?)", (username, )).fetchone()
+            conn.commit()
+            if row:
+                cur.execute("INSERT INTO orders (username, products, total) VALUES (?, ?, ?)",
+                            (username, products, total))
+                conn.commit()
+                return jsonify({
+                    'message': 'Order successfully created'
+                })
+            else:
+                resp = jsonify({'message': 'Bad Request - invalid username'})
+                resp.status_code = 400
+                return resp
+        else:
+            resp = jsonify({'message': 'Bad Request - invalid credendtials'})
+            resp.status_code = 400
+            return resp
+    except Exception as ex:
+        print(ex)
+        resp = jsonify({'message': 'Bad Request - invalid credendtials'})
+        resp.status_code = 400
+        return resp
+
+
 if __name__ == '__main__':
     app.run()

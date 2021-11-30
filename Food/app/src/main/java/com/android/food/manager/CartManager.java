@@ -28,4 +28,8 @@ public class CartManager {
             this.cartList.addAll(cartList);
         }
     }
+
+    public void setCartListEmty() {
+        this.cartList = new ArrayList<ProductsRespone>();
+    }
 }

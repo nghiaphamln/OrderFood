@@ -54,24 +54,6 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/btn_liked"
-        android:layout_margin="10dp"
-        style="@style/Button1"
-        android:text="Đã thích"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btn_statistical"
-        android:layout_margin="10dp"
-        style="@style/Button1"
-        android:text="Thống kê"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
         android:id="@+id/btn_logout"
         android:layout_margin="10dp"
         style="@style/Button1"

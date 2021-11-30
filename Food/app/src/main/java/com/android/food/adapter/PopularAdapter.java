@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.food.R;
+import com.android.food.manager.AccountManager;
 import com.android.food.manager.CartManager;
 import com.android.food.models.ProductsRespone;
 import com.squareup.picasso.Picasso;
@@ -47,9 +48,16 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHold
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<ProductsRespone> a = new ArrayList<>();
-                a.add(productsResponeArrayList.get(position));
-                CartManager.getInstance().setCartList(a);
+                if (AccountManager.getInstance().isLogin()) {
+                    ArrayList<ProductsRespone> a = new ArrayList<>();
+                    a.add(productsResponeArrayList.get(position));
+                    CartManager.getInstance().setCartList(a);
+                    Toast.makeText(v.getContext(), "Đã thêm sản phẩm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(v.getContext(), "Bạn chưa đăng nhập!", Toast.LENGTH_SHORT).show();
+                }
+                
             }
         });
     }

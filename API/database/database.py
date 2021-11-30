@@ -113,3 +113,47 @@ def insert_products():
         print("Categories insertion failed - {}".format(ex))
     finally:
         conn.close()
+
+
+# create table orders
+def create_orders_table():
+    try:
+        conn = connect_to_db()
+        conn.execute('''
+            CREATE TABLE orders (
+                id INTEGER PRIMARY KEY NOT NULL,
+                user_id INTEGER NOT NULL,
+                total_price REAL NOT NULL,
+                foreign key (user_id) references users(id)
+            );
+        ''')
+
+        conn.commit()
+        print("Orders table created successfully")
+    except Exception as ex:
+        print("Orders table creation failed - {}".format(ex))
+    finally:
+        conn.close()
+
+
+# create table order_details
+def create_order_details_table():
+    try:
+        conn = connect_to_db()
+        conn.execute('''
+            CREATE TABLE order_details (
+                id INTEGER PRIMARY KEY NOT NULL,
+                order_id INTEGER NOT NULL,
+                product_id INTEGER NOT NULL,
+                quantity INTEGER NOT NULL,
+                foreign key (order_id) references orders(id),
+                foreign key (product_id) references products(id)
+            );
+        ''')
+
+        conn.commit()
+        print("Order details table created successfully")
+    except Exception as ex:
+        print("Order details table creation failed - {}".format(ex))
+    finally:
+        conn.close()

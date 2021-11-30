@@ -3,6 +3,7 @@ package com.android.food;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,11 +37,26 @@ public class CartFragment extends Fragment {
         recyclerViewCartList = v.findViewById(R.id.recyclerview);
         recyclerViewCategory(v);
 
-        TextView btnTest = v.findViewById(R.id.textView16);
-        btnTest.setOnClickListener(new View.OnClickListener() {
+        TextView btnOrder = v.findViewById(R.id.textView16);
+        btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!AccountManager.getInstance().isLogin()) {
+                    Toast.makeText(getActivity(), "Bạn chưa đăng nhập!", Toast.LENGTH_SHORT).show();
+                }
+                else if (CartManager.getInstance().getCartList() != null) {
+                    Toast.makeText(getActivity(), "Đã đặt sản phẩm thành công!", Toast.LENGTH_SHORT).show();
+                    CartManager.getInstance().setCartListEmty();
+                    HomeFragment homeFragment = new HomeFragment();
+                    FragmentManager manager = getFragmentManager();
+                    assert manager != null;
+                    manager.beginTransaction()
+                            .replace(R.id.container, homeFragment)
+                            .commit();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Giỏ hàng rỗng!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         if (CartManager.getInstance().getCartList() != null){
