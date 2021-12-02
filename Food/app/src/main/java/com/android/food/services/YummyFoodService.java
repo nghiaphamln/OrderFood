@@ -11,6 +11,7 @@ import com.android.food.models.LoginRequest;
 import com.android.food.models.LoginResponse;
 import com.android.food.models.OtpRequest;
 import com.android.food.models.OtpResponse;
+import com.android.food.models.ProductsRequest;
 import com.android.food.models.ProductsRespone;
 import com.android.food.models.RegisterRequest;
 import com.android.food.models.RegisterResponse;
@@ -46,9 +47,9 @@ public interface YummyFoodService {
     @POST("/change-password")
     Call<ChangePasswordResponse> changePassword(@Body ChangePasswordRequest data);
 
-    @GET("/categories")
+    @GET("/get-categories")
     Call<List<CategoriesResponse>> getCategories();
 
-    @GET("/products")
-    Call<List<ProductsRespone>> getProducts();
+    @POST("/get-products")
+    Call<List<ProductsRespone>> getProducts(@Body ProductsRequest data);
 }

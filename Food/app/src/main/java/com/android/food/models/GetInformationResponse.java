@@ -16,6 +16,10 @@ public class GetInformationResponse {
     @Expose
     private String username;
 
+    @SerializedName("permission")
+    @Expose
+    private String permission;
+
     public String getEmail() {
         return email;
     }
@@ -38,5 +42,13 @@ public class GetInformationResponse {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 }

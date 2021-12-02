@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.food.client.ApiUtils;
@@ -17,6 +18,8 @@ import com.android.food.models.GetInformationRequest;
 import com.android.food.models.GetInformationResponse;
 import com.android.food.services.YummyFoodService;
 import com.google.android.material.textfield.TextInputEditText;
+
+import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,7 +60,7 @@ public class InformationFragment extends Fragment {
                     String username = response.body().getUsername();
                     String email = response.body().getEmail();
                     String phone = response.body().getPhone();
-                    System.out.println(username + "\n" + email + "\n" + phone);
+                    String permission = response.body().getPermission();
                     // đưa thông tin người dùng vào form
                     TextInputEditText emailEditText = (TextInputEditText) v.findViewById(R.id.et_email);
                     emailEditText.setText(email);
@@ -67,6 +70,15 @@ public class InformationFragment extends Fragment {
 
                     TextInputEditText phoneEditText = (TextInputEditText) v.findViewById(R.id.et_phone);
                     phoneEditText.setText(phone);
+
+                    EditText permissionEditText = (EditText) v.findViewById(R.id.et_permission);
+                    if (permission.equals("user")) {
+                        permissionEditText.setText("Người dùng");
+                    }
+                    else {
+                        permissionEditText.setText("Quản trị viên");
+                    }
+
                 }
                 else {
                     Toast.makeText(getActivity(), "Đã xảy ra lỗi!", Toast.LENGTH_SHORT).show();

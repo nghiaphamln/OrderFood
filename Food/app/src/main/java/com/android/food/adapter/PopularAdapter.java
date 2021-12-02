@@ -64,7 +64,12 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return productsResponeArrayList.size();
+        if (productsResponeArrayList != null) {
+            return productsResponeArrayList.size();
+        }
+        else {
+            return 0;
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

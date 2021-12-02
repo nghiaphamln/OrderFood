@@ -23,6 +23,7 @@ import com.android.food.adapter.PopularAdapter;
 import com.android.food.client.ApiUtils;
 import com.android.food.domain.CategoryDomain;
 import com.android.food.models.CategoriesResponse;
+import com.android.food.models.ProductsRequest;
 import com.android.food.models.ProductsRespone;
 import com.android.food.services.YummyFoodService;
 
@@ -77,7 +78,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        Call<List<ProductsRespone>> callbackPopular = mService.getProducts();
+        ProductsRequest data = new ProductsRequest();
+        data.setCategory("0");
+        Call<List<ProductsRespone>> callbackPopular = mService.getProducts(data);
         callbackPopular.enqueue(new Callback<List<ProductsRespone>>() {
             @Override
             public void onResponse(Call<List<ProductsRespone>> call,

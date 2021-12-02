@@ -173,11 +173,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        app:hintEnabled="false"
-                        app:passwordToggleEnabled="true">
+                        app:hintEnabled="false">
 
                         <EditText
-                            android:id="@+id/et_password_register"
+                            android:id="@+id/et_permission"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -187,43 +186,9 @@
                             android:drawableStart="@drawable/ic_lock"
                             android:drawableLeft="@drawable/ic_lock"
                             android:drawablePadding="12dp"
-                            android:hint="@string/hint_password"
+                            android:hint="Quyền"
                             android:imeOptions="actionNext"
-                            android:inputType="textPassword"
-                            android:minWidth="320dp"
-                            android:minHeight="45dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="4dp"
-                    app:cardBackgroundColor="@color/colorTextInputBackground"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        app:hintEnabled="false"
-                        app:passwordToggleEnabled="true">
-
-                        <EditText
-                            android:id="@+id/et_confirm_password"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:background="@android:color/transparent"
-                            android:drawableStart="@drawable/ic_lock"
-                            android:drawableLeft="@drawable/ic_lock"
-                            android:drawablePadding="12dp"
-                            android:hint="@string/hint_confirm_password"
-                            android:imeOptions="actionDone"
-                            android:inputType="textPassword"
+                            android:inputType="text"
                             android:minWidth="320dp"
                             android:minHeight="45dp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -236,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
-                    android:text="@string/button_sign_up" />
+                    android:text="Đổi thành tài khoản đăng bài" />
 
                 </LinearLayout>
 
