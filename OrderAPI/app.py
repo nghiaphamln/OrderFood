@@ -1,6 +1,9 @@
+import json
+
 from flask import Flask, request, jsonify
 import user
 import index
+import admin
 from flask_mail import Mail
 
 app = Flask(__name__)
@@ -79,6 +82,14 @@ def get_categories():
 def get_products():
     data = request.get_json()
     return index.get_products_by_category(data)
+
+
+# add product
+@app.route('/add-product', methods=['POST'])
+def add_product():
+    image = request.files['image']
+    data = json.loads(request.form.get("data"))
+    return admin.add_product(data, image)
 
 
 if __name__ == '__main__':

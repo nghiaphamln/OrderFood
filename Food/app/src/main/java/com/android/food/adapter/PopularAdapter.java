@@ -9,11 +9,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.food.AccountManagerFragment;
 import com.android.food.R;
+import com.android.food.ShowDetailFragment;
 import com.android.food.manager.AccountManager;
 import com.android.food.manager.CartManager;
+import com.android.food.manager.ProductManager;
 import com.android.food.models.ProductsRespone;
 import com.squareup.picasso.Picasso;
 
@@ -45,20 +51,23 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHold
         holder.txtFee.setText(productsRespone.getPrice().toString());
         Picasso.get().load(productsRespone.getImage()).into(holder.imgPic);
 
-        holder.btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (AccountManager.getInstance().isLogin()) {
-                    ArrayList<ProductsRespone> a = new ArrayList<>();
-                    a.add(productsResponeArrayList.get(position));
-                    CartManager.getInstance().setCartList(a);
-                    Toast.makeText(v.getContext(), "Đã thêm sản phẩm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(v.getContext(), "Bạn chưa đăng nhập!", Toast.LENGTH_SHORT).show();
-                }
-                
+        holder.btnAdd.setOnClickListener(v -> {
+            if (AccountManager.getInstance().isLogin()) {
+                ArrayList<ProductsRespone> a = new ArrayList<>();
+                a.add(productsResponeArrayList.get(position));
+                CartManager.getInstance().setCartList(a);
+                Toast.makeText(v.getContext(), "Đã thêm sản phẩm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
             }
+            else {
+                Toast.makeText(v.getContext(), "Bạn chưa đăng nhập!", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        holder.imgPic.setOnClickListener(v -> {
+            ProductManager.getInstance().setSelectedProduct(productsRespone);
+            ShowDetailFragment showDetailFragment = new ShowDetailFragment();
+            ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.container, showDetailFragment).addToBackStack(null).commit();
         });
     }
 

@@ -138,6 +138,22 @@ def insert_products():
         conn.close()
 
 
+# add product
+def add_product(category_id, name, description, price, image):
+    try:
+        conn = connect_to_db()
+        conn.execute('''
+            INSERT INTO products (category_id, name, description, price, image)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (category_id, name, description, price, image))
+        conn.commit()
+        print("Product inserted successfully")
+    except Exception as ex:
+        print("Product insertion failed - {}".format(ex))
+    finally:
+        conn.close()
+
+
 """
 create_users_table()
 create_categories_table()
