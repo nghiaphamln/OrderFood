@@ -31,7 +31,7 @@ def get_products_by_category(data):
         conn = connect_to_db()
         cur = conn.cursor()
         if str(category) == '0':
-            row = cur.execute("SELECT * FROM products").fetchall()
+            row = cur.execute("SELECT * FROM products LIMIT 7").fetchall()
         else:
             row = cur.execute("SELECT * FROM products WHERE category_id = (?)", (category,)).fetchall()
         conn.commit()
