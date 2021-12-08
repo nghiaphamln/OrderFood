@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify
 import user
 import index
 import admin
+import cart
 from flask_mail import Mail
 
 app = Flask(__name__)
@@ -11,7 +12,7 @@ app = Flask(__name__)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = '1824801040118@student.tdmu.edu.vn'
-app.config['MAIL_PASSWORD'] = 'Nghiadz1!'
+app.config['MAIL_PASSWORD'] = 'Nghiadz1! !'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
@@ -90,6 +91,14 @@ def add_product():
     image = request.files['image']
     data = json.loads(request.form.get("data"))
     return admin.add_product(data, image)
+
+
+# add order
+@app.route('/add-order', methods=['POST'])
+def add_order():
+    data = request.get_json()
+    print(data)
+    return cart.add_to_order(data)
 
 
 if __name__ == '__main__':

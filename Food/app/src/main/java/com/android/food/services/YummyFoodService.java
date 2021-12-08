@@ -1,5 +1,7 @@
 package com.android.food.services;
 
+import com.android.food.models.AddOrderRequest;
+import com.android.food.models.AddOrderResponse;
 import com.android.food.models.CategoriesResponse;
 import com.android.food.models.ChangePasswordRequest;
 import com.android.food.models.ChangePasswordResponse;
@@ -52,4 +54,7 @@ public interface YummyFoodService {
 
     @POST("/get-products")
     Call<List<ProductsRespone>> getProducts(@Body ProductsRequest data);
+
+    @POST("add-order")
+    Call<AddOrderResponse> addOrder(@Body AddOrderRequest data);
 }

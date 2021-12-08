@@ -68,10 +68,11 @@ def create_orders_table():
                 CREATE TABLE orders (
                     id INTEGER PRIMARY KEY NOT NULL,
                     user_id INTEGER NOT NULL,
-                    product_id INTEGER NOT NULL,
                     total_price INTEGER NOT NULL,
-                    FOREIGN KEY (user_id) REFERENCES users(id),
-                    FOREIGN KEY (product_id) REFERENCES products(id)
+                    name STRING NOT NULL,
+                    phone STRING NOT NULL,
+                    address STRING NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES users(id)
                 );
             ''')
 
@@ -154,11 +155,25 @@ def add_product(category_id, name, description, price, image):
         conn.close()
 
 
-"""
-create_users_table()
+# insret into users
+def insert_users():
+    try:
+        conn = connect_to_db()
+        conn.execute("INSERT INTO users (email, username, phone, password, permission, otp) VALUES ('nghiaphamln3@gmail.com', 'admin',  '0336069048', 'admin', 'admin', '123456')")
+        conn.commit()
+        print("Users inserted successfully")
+    except Exception as ex:
+        print("Users insertion failed - {}".format(ex))
+    finally:
+        conn.close()
+
+
+"""create_users_table()
 create_categories_table()
 create_products_table()
 create_orders_table()
-create_orders_details_table()"""
-# insert_categories()
-# insert_products()
+create_orders_details_table()
+insert_categories()
+insert_products()
+# insert_users()
+"""

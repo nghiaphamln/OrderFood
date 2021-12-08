@@ -44,14 +44,14 @@ public class CartFragment extends Fragment {
                 if (!AccountManager.getInstance().isLogin()) {
                     Toast.makeText(getActivity(), "Bạn chưa đăng nhập!", Toast.LENGTH_SHORT).show();
                 }
-                else if (CartManager.getInstance().getCartList() != null) {
-                    Toast.makeText(getActivity(), "Đã đặt sản phẩm thành công!", Toast.LENGTH_SHORT).show();
-                    CartManager.getInstance().setCartListEmty();
-                    HomeFragment homeFragment = new HomeFragment();
+                else if (CartManager.getInstance().getCartList() != null && CartManager.getInstance().getCartList().size() > 0) {
+                    /* Toast.makeText(getActivity(), "Đã đặt sản phẩm thành công!", Toast.LENGTH_SHORT).show();
+                     */
+                    OrderInfoFragment orderInfoFragment = new OrderInfoFragment();
                     FragmentManager manager = getFragmentManager();
                     assert manager != null;
                     manager.beginTransaction()
-                            .replace(R.id.container, homeFragment)
+                            .replace(R.id.container, orderInfoFragment)
                             .commit();
                 }
                 else {
